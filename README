@@ -2,5 +2,21 @@ Reproduction of snapshot recovery bug.
 
 Steps to reproduce:
 1) Build project using sbt
+
+
 2) Launch bug.persistencebug.Main
 3) Launch bug.persistencebug.simulator.SimulatorMain
+
+This will cause a tree to be created in the Core actor system, and a snapshot of each actor will be generated under
+target/snapshots.
+
+4) Stop both mains and restart just the bug.persistencebug.Main
+
+This will recover the Core actor system from the snapshots but the tree will not be correctly reproduced. The root
+node of the tree will have the wrong Snapshot offered (and this will be seen from the log output).
+
+---
+
+A workaround to the problem is to change the code on line 68 of SearchTreeNode.scala to reverse the order of 'name' and
+'nodeName' so that the persistenceId runs from node to root, rather than root to node.
+
