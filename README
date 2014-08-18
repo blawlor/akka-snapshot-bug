@@ -1,0 +1,6 @@
+Reproduction of snapshot recovery bug.
+
+Steps to reproduce:
+1) Build project using sbt
+2) Launch bug.persistencebug.Main
+3) Launch bug.persistencebug.simulator.SimulatorMain
