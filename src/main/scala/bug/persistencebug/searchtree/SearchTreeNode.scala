@@ -65,7 +65,7 @@ class SearchTreeNode(val name: String, val collector: ActorRef) extends Persiste
 
     case PlaceLeaf(sequenceNumber, nodeName :: remainingPath, lot) =>
       if (!childNodes.contains(nodeName)) {
-        val newChildName = name + "-" + nodeName
+        val newChildName = nodeName + "-" + name
         val childNode = context.actorOf(SearchTreeNode.props(newChildName, collector), nodeName)
         childNodes = childNodes + (nodeName -> childNode)
         state = state.updateChildNodes(state.childNodes :+ newChildName)
